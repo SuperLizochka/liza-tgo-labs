@@ -1,0 +1,10 @@
+# Данные корпуса не загружать в репозиторий
+pt02/corpus.txt
+
+# Веса обученных моделей
+*.pt
+*.pth
+
+# Временные файлы Python и Jupyter
+__pycache__/
+.ipynb_checkpoints/

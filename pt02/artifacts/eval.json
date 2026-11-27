@@ -1,0 +1,16 @@
+{
+  "words": 2000,
+  "bigram": {
+    "tokens": 1999,
+    "nats_total": 16379.4602,
+    "nats_per_word": 8.18973,
+    "ppl_per_word": 3603.7495,
+    "alpha": 0.01
+  },
+  "tiny": {
+    "tokens": 3671,
+    "nats_total": 15750.8243,
+    "nats_per_word": 7.875412,
+    "ppl_per_word": 2631.7706
+  }
+}

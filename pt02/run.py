@@ -333,6 +333,8 @@ def main():
     curve.append({"step": 0, "train_loss": initial_train, "val_loss": initial_val})
     save_sample(0)
     print(f"step 0/{steps}: train={initial_train:.4f}, val={initial_val:.4f}", flush=True)
+    interval_loss_sum = 0.0
+    interval_loss_count = 0
 
     for step in range(1, steps + 1):
         model.train()
@@ -344,12 +346,15 @@ def main():
         loss.backward()
         torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
         optimizer.step()
+        interval_loss_sum += float(loss.item())
+        interval_loss_count += 1
 
         if step in sample_steps:
             save_sample(step)
         if step % interval == 0 or step == steps:
-            train_loss = mean_loss(model, train_ids, context, device, SEED + step,
-                                   windows=20)
+            train_loss = interval_loss_sum / max(1, interval_loss_count)
+            interval_loss_sum = 0.0
+            interval_loss_count = 0
             val_loss = fixed_val_loss()
             curve.append({"step": step, "train_loss": train_loss, "val_loss": val_loss})
             print(f"step {step}/{steps}: train={train_loss:.4f}, val={val_loss:.4f}",
